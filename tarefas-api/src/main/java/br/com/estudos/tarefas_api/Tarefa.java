@@ -1,9 +1,23 @@
 package br.com.estudos.tarefas_api;
 
+import jakarta.persistence.*;
+
+@Entity
+@Table(name = "tarefas")
 public class Tarefa {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private String descricao;
     private boolean concluida;
+
+    protected Tarefa() {
+    }
+
+    public Tarefa(String descricao, boolean concluida) {
+        this.descricao = descricao;
+        this.concluida = concluida;
+    }
 
     public Tarefa(int id, String descricao, boolean concluida) {
         this.id = id;

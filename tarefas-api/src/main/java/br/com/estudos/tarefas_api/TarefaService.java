@@ -2,21 +2,15 @@ package br.com.estudos.tarefas_api;
 
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
 
 @Service
 public class TarefaService {
+    private final TarefaRepository tarefaRepository;
 
-    private int proximoId = 1;
-
-    private final List<Tarefa> tarefas = new ArrayList<>();
-
-    public TarefaService() {
-        tarefas.add(new Tarefa(1, "Estudar Spring Boot 123", false));
-        tarefas.add(new Tarefa(2, "Estudar Java Core 4567", true));
-        proximoId = 3;
+    public TarefaService(TarefaRepository tarefaRepository) {
+        this.tarefaRepository = tarefaRepository;
     }
 
     public void cadastrarTarefa(CadastroTarefaDTO dto) {
@@ -24,36 +18,35 @@ public class TarefaService {
             throw new IllegalArgumentException("Descrição inválida");
         }
 
-        tarefas.add(new Tarefa(
-                proximoId++,
+        tarefaRepository.save(new Tarefa(
                 dto.getDescricao(),
-                dto.isConcluida())
-        );
+                dto.isConcluida()));
     }
 
     public List<Tarefa> listarTarefas() {
-        return tarefas;
+        return tarefaRepository.findAll();
     }
 
     public Tarefa buscarPorId(int id) {
-        for (Tarefa t : tarefas) {
-            if (t.getId() == id) {
-                return t;
-            }
-        }
-        throw new NoSuchElementException("A tarefa " + id + " não foi encontrada.");
+        return tarefaRepository.findById(id)
+                .orElseThrow(() -> new NoSuchElementException(
+                                "Tarefa " + id + " não encontrada."
+                        ));
     }
 
     public void concluirTarefa(int id) {
         Tarefa tarefa = buscarPorId(id);
+
         if (tarefa.isConcluida()) {
-            throw new IllegalStateException("Essa tarefa já está concluida.");
+            throw new IllegalStateException("Tarefa já concluida.");
         }
+
         tarefa.setConcluida(true);
+        tarefaRepository.save(tarefa);
     }
 
     public void deletarTarefa(int id) {
         Tarefa tarefa = buscarPorId(id);
-        tarefas.remove(tarefa);
+        tarefaRepository.delete(tarefa);
     }
 }
