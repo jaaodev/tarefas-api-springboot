@@ -2,7 +2,7 @@ POST http://localhost:8090/tarefas
 Content-Type: application/json
 
 {
-  "descricao": "Teste 3 !!!!!!!!!",
+  "descricao": "Testando consultas personalizadas... 3",
   "concluida": false
 }
 
@@ -12,10 +12,10 @@ DELETE http://localhost:8090/tarefas/3
 
 ###
 
-GET http://localhost:8090/tarefas/lista
+GET http://localhost:8090/tarefas/filtrar?descricao=test&concluida=true
 
 ###
 
-PATCH http://localhost:8090/tarefas/4/concluir
+PATCH http://localhost:8090/tarefas/5/concluir
 
 //Testando controle remoto...
