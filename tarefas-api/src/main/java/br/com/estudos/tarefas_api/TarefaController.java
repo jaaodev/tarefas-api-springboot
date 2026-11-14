@@ -1,6 +1,7 @@
 package br.com.estudos.tarefas_api;
 
 import jakarta.validation.Valid;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -35,6 +36,26 @@ public class TarefaController {
     public List<Tarefa> filtrarTarefas(
             @RequestParam String descricao, boolean concluida) {
         return tarefaService.filtrarTarefas(descricao, concluida);
+    }
+
+    @GetMapping("/tarefas/status")
+    public List<Tarefa> listarPorStatus (
+            @RequestParam boolean concluida) {
+        return tarefaService.listarPorStatus(concluida);
+    }
+
+    @GetMapping("/tarefas/pesquisar")
+    public List<Tarefa> pesquisarTarefas (
+            @RequestParam String descricao,
+            @RequestParam boolean concluida) {
+        return tarefaService.pesquisarTarefa(descricao, concluida);
+    }
+
+    @GetMapping("/tarefas/paginas")
+    public Page<Tarefa> listasPaginas(
+            @RequestParam(defaultValue = "0") int pagina,
+            @RequestParam(defaultValue = "3") int tamanho) {
+        return tarefaService.listarPaginas(pagina, tamanho);
     }
 
     @GetMapping("/tarefas/lista")

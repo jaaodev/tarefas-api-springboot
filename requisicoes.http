@@ -12,10 +12,8 @@ DELETE http://localhost:8090/tarefas/3
 
 ###
 
-GET http://localhost:8090/tarefas/filtrar?descricao=test&concluida=true
+GET http://localhost:8090/tarefas/paginas?pagina=-1&tamanho=101
 
 ###
 
 PATCH http://localhost:8090/tarefas/5/concluir
-
-//Testando controle remoto...
