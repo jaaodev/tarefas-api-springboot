@@ -2,8 +2,9 @@ POST http://localhost:8090/tarefas
 Content-Type: application/json
 
 {
-  "descricao": "Testando consultas personalizadas... 3",
-  "concluida": false
+  "descricao": "ADD SEGUNDA TAREFA A UM USUARIO",
+  "concluida": false,
+  "usuarioId": 2
 }
 
 ###
@@ -17,3 +18,21 @@ GET http://localhost:8090/tarefas/paginas?pagina=-1&tamanho=101
 ###
 
 PATCH http://localhost:8090/tarefas/5/concluir
+
+###
+
+GET http://localhost:8090/tarefas/lista
+
+###
+
+POST http://localhost:8090/usuarios
+Content-Type: application/json
+
+{
+  "nome": "Jose",
+  "email": "joseemail.com"
+}
+
+###
+
+GET http://localhost:8090/usuarios/2

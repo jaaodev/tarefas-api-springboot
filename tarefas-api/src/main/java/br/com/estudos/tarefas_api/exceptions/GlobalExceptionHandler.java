@@ -1,4 +1,4 @@
-package br.com.estudos.tarefas_api;
+package br.com.estudos.tarefas_api.exceptions;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

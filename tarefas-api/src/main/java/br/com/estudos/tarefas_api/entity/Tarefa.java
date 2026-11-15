@@ -1,4 +1,4 @@
-package br.com.estudos.tarefas_api;
+package br.com.estudos.tarefas_api.entity;
 
 import jakarta.persistence.*;
 
@@ -8,6 +8,9 @@ public class Tarefa {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+    @ManyToOne
+    @JoinColumn(name = "usuario_id")
+    private Usuario usuario;
     private String descricao;
     private boolean concluida;
 
@@ -31,6 +34,14 @@ public class Tarefa {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public Usuario getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
     }
 
     public String getDescricao() {

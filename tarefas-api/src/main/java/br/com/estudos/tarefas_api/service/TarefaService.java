@@ -1,5 +1,10 @@
-package br.com.estudos.tarefas_api;
+package br.com.estudos.tarefas_api.service;
 
+import br.com.estudos.tarefas_api.dto.CadastroTarefaDTO;
+import br.com.estudos.tarefas_api.entity.Tarefa;
+import br.com.estudos.tarefas_api.entity.Usuario;
+import br.com.estudos.tarefas_api.repository.TarefaRepository;
+import br.com.estudos.tarefas_api.repository.UsuarioRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -15,19 +20,27 @@ import static org.springframework.data.domain.Sort.Direction.DESC;
 @Service
 public class TarefaService {
     private final TarefaRepository tarefaRepository;
+    private final UsuarioRepository usuarioRepository;
 
-    public TarefaService(TarefaRepository tarefaRepository) {
+
+    public TarefaService(TarefaRepository tarefaRepository, UsuarioRepository usuarioRepository, UsuarioService usuarioService) {
         this.tarefaRepository = tarefaRepository;
+        this.usuarioRepository = usuarioRepository;
     }
 
     @Transactional
     public void cadastrarTarefa(CadastroTarefaDTO dto) {
+        Usuario usuario = usuarioRepository.findById(dto.getUsuarioId())
+                .orElseThrow(() -> new NoSuchElementException(
+                        "Id de usuário não encontrado."
+                ));
         if (dto.getDescricao() == null || dto.getDescricao().isBlank()) {
             throw new IllegalArgumentException("Descrição inválida");
         }
-        tarefaRepository.save(new Tarefa(
-                dto.getDescricao(), dto.isConcluida()
-        ));
+        Tarefa tarefa = new Tarefa(dto.getDescricao(), dto.isConcluida());
+        tarefa.setUsuario(usuario);
+        tarefaRepository.save(tarefa);
+
     }
 
     @Transactional(readOnly = true)

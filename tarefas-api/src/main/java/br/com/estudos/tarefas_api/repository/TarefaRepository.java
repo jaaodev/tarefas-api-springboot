@@ -1,5 +1,6 @@
-package br.com.estudos.tarefas_api;
+package br.com.estudos.tarefas_api.repository;
 
+import br.com.estudos.tarefas_api.entity.Tarefa;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;

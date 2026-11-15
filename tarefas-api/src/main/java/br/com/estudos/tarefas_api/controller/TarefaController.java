@@ -1,5 +1,9 @@
-package br.com.estudos.tarefas_api;
+package br.com.estudos.tarefas_api.controller;
 
+import br.com.estudos.tarefas_api.entity.Usuario;
+import br.com.estudos.tarefas_api.service.TarefaService;
+import br.com.estudos.tarefas_api.dto.CadastroTarefaDTO;
+import br.com.estudos.tarefas_api.entity.Tarefa;
 import jakarta.validation.Valid;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
