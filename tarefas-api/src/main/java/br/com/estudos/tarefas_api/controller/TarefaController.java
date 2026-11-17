@@ -1,5 +1,6 @@
 package br.com.estudos.tarefas_api.controller;
 
+import br.com.estudos.tarefas_api.dto.TarefaRespostaDTO;
 import br.com.estudos.tarefas_api.entity.Usuario;
 import br.com.estudos.tarefas_api.service.TarefaService;
 import br.com.estudos.tarefas_api.dto.CadastroTarefaDTO;
@@ -67,6 +68,16 @@ public class TarefaController {
         return tarefaService.listarTarefas();
     }
 
+    @GetMapping("/tarefas/lista/dto")
+    public List<TarefaRespostaDTO> listarTarefasDTO() {
+        return tarefaService.listarTarefasDTO();
+    }
+
+    @GetMapping("/tarefas/com-usuarios")
+    public List<TarefaRespostaDTO> listarComUsuarios() {
+        return tarefaService.listarComUsuarios();
+    }
+
     @GetMapping("/tarefas/pendentes")
     public List<Tarefa> listarPendentes() {
         return tarefaService.listarPendentes();
@@ -85,6 +96,12 @@ public class TarefaController {
     public Tarefa buscarPorId(
             @PathVariable int id) {
         return tarefaService.buscarPorId(id);
+    }
+
+    @GetMapping("/tarefas/dto/{id}")
+    public TarefaRespostaDTO buscarPorIdDTO(
+            @PathVariable int id) {
+        return tarefaService.buscarPorIdDTO(id);
     }
 
     @PatchMapping("/tarefas/{id}/concluir")

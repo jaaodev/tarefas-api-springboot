@@ -10,6 +10,7 @@ import java.util.NoSuchElementException;
 
 @RestControllerAdvice
 public class GlobalExceptionHandler {
+
     @ExceptionHandler(TarefaDuplicadaException.class)
     public ResponseEntity<String> tratarIdDuplicado(TarefaDuplicadaException e) {
         return ResponseEntity.status(HttpStatus.CONFLICT)

@@ -4,12 +4,12 @@ Content-Type: application/json
 {
   "descricao": "ADD SEGUNDA TAREFA A UM USUARIO",
   "concluida": false,
-  "usuarioId": 2
+  "usuarioId": 9
 }
 
 ###
 
-DELETE http://localhost:8090/tarefas/3
+DELETE http://localhost:8090/tarefas/9
 
 ###
 
@@ -21,7 +21,7 @@ PATCH http://localhost:8090/tarefas/5/concluir
 
 ###
 
-GET http://localhost:8090/tarefas/lista
+GET http://localhost:8090/tarefas/com-usuarios
 
 ###
 

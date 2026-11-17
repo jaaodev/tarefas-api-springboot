@@ -31,4 +31,8 @@ public interface TarefaRepository
     List<Tarefa> pesquisarTarefas(@Param("descricao") String descricao,
                                   @Param("status") boolean status);
 
+    @Query("SELECT t FROM Tarefa t " +
+            "LEFT JOIN FETCH t.usuario")
+    List<Tarefa> buscarComUsuarios();
+
 }

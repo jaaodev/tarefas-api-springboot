@@ -1,6 +1,7 @@
 package br.com.estudos.tarefas_api.service;
 
 import br.com.estudos.tarefas_api.dto.CadastroTarefaDTO;
+import br.com.estudos.tarefas_api.dto.TarefaRespostaDTO;
 import br.com.estudos.tarefas_api.entity.Tarefa;
 import br.com.estudos.tarefas_api.entity.Usuario;
 import br.com.estudos.tarefas_api.repository.TarefaRepository;
@@ -21,7 +22,6 @@ import static org.springframework.data.domain.Sort.Direction.DESC;
 public class TarefaService {
     private final TarefaRepository tarefaRepository;
     private final UsuarioRepository usuarioRepository;
-
 
     public TarefaService(TarefaRepository tarefaRepository, UsuarioRepository usuarioRepository, UsuarioService usuarioService) {
         this.tarefaRepository = tarefaRepository;
@@ -111,5 +111,45 @@ public class TarefaService {
         Sort ordenacao = Sort.by(DESC, "id");
         Pageable pageable = PageRequest.of(pagina, tamanho, ordenacao);
         return tarefaRepository.findAll(pageable);
+    }
+
+    public TarefaRespostaDTO converterParaDTO(Tarefa tarefa) {
+        Usuario usuario = tarefa.getUsuario();
+        Integer usuarioId = null;
+        String usuarioNome = null;
+        if (usuario != null) {
+            usuarioId = usuario.getId();
+            usuarioNome = usuario.getNome();
+        }
+        return new TarefaRespostaDTO(
+                tarefa.getId(),
+                tarefa.getDescricao(),
+                tarefa.isConcluida(),
+                usuarioId,
+                usuarioNome
+        );
+    }
+
+    @Transactional(readOnly = true)
+    public List<TarefaRespostaDTO> listarTarefasDTO() {
+        return tarefaRepository.findAll(
+                Sort.by(DESC, "id")
+                )
+                .stream()
+                .map(this::converterParaDTO)
+                .toList();
+    }
+
+    @Transactional(readOnly = true)
+    public TarefaRespostaDTO buscarPorIdDTO(int id) {
+        Tarefa tarefa = buscarPorId(id);
+        return converterParaDTO(tarefa);
+    }
+
+    @Transactional(readOnly = true)
+    public List<TarefaRespostaDTO> listarComUsuarios() {
+        return tarefaRepository.buscarComUsuarios().stream()
+                .map(this::converterParaDTO)
+                .toList();
     }
 }
