@@ -78,6 +78,11 @@ public class TarefaController {
         return tarefaService.listarComUsuarios();
     }
 
+    @GetMapping("/tarefas/entity-graph")
+    public List<TarefaRespostaDTO> listarComEntityGraph() {
+        return tarefaService.listarComEntityGraph();
+    }
+
     @GetMapping("/tarefas/pendentes")
     public List<Tarefa> listarPendentes() {
         return tarefaService.listarPendentes();

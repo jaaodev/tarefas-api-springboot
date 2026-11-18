@@ -152,4 +152,11 @@ public class TarefaService {
                 .map(this::converterParaDTO)
                 .toList();
     }
+
+    @Transactional(readOnly = true)
+    public List<TarefaRespostaDTO> listarComEntityGraph() {
+        return tarefaRepository.buscarComEntityGraph().stream()
+                .map(this::converterParaDTO)
+                .toList();
+    }
 }

@@ -13,7 +13,7 @@ DELETE http://localhost:8090/tarefas/9
 
 ###
 
-GET http://localhost:8090/tarefas/paginas?pagina=-1&tamanho=101
+GET http://localhost:8090/tarefas/paginas?pagina=0&tamanho=5
 
 ###
 

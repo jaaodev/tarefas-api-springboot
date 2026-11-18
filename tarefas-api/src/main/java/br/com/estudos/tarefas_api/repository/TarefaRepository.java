@@ -1,6 +1,7 @@
 package br.com.estudos.tarefas_api.repository;
 
 import br.com.estudos.tarefas_api.entity.Tarefa;
+import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -34,5 +35,9 @@ public interface TarefaRepository
     @Query("SELECT t FROM Tarefa t " +
             "LEFT JOIN FETCH t.usuario")
     List<Tarefa> buscarComUsuarios();
+
+    @EntityGraph(attributePaths = "usuario")
+    @Query("SELECT t FROM Tarefa t")
+    List<Tarefa> buscarComEntityGraph();
 
 }
