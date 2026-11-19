@@ -7,6 +7,7 @@ import br.com.estudos.tarefas_api.repository.TarefaRepository;
 import br.com.estudos.tarefas_api.repository.UsuarioRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.ArgumentCaptor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
@@ -91,6 +92,8 @@ public class TarefaServiceTest {
     void deveCadastrarTarefaComUsuarioExistente() {
         Usuario usuario = new Usuario("Carlos" , "carlos@email.com");
         CadastroTarefaDTO dto = new CadastroTarefaDTO();
+        ArgumentCaptor<Tarefa> captor = ArgumentCaptor.forClass(Tarefa.class);
+
         dto.setDescricao("Estudar testes com Mockito");
         dto.setUsuarioId(1);
 
@@ -100,7 +103,15 @@ public class TarefaServiceTest {
         tarefaService.cadastrarTarefa(dto);
 
         verify(usuarioRepository).findById(1);
-        verify(tarefaRepository).save(any(Tarefa.class));
+        verify(tarefaRepository).save(captor.capture());
 
+        Tarefa tarefaCapturada = captor.getValue();
+
+        assertEquals("Estudar testes com Mockito",
+                tarefaCapturada.getDescricao());
+
+        assertFalse(tarefaCapturada.isConcluida());
+
+        assertSame(usuario, tarefaCapturada.getUsuario());
     }
 }
